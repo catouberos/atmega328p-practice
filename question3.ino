@@ -7,8 +7,7 @@ int pressed = 0;
 int main(void) {
   DDRD &= ~(1 << DDD2);  // PORTD2 as input
 
-  DDRB |= (1 << DDB3);  // PORTB3 as output
-  DDRB |= (1 << DDB4);  // PORTB4 as output
+  DDRB |= (1 << DDB3) | (1 << DDB4);  // PORTB3-4 as output
 
   // clock 1
   TCCR1B |= (1 << WGM12);  // CTC mode
@@ -17,7 +16,7 @@ int main(void) {
   TIMSK1 = (1 << OCIE1A);  // enable compare match A interrupt
 
   // int0 trigger on logic change
-  EICRA |= (1 << ISC11);  // falling-edge
+  EICRA |= (1 << ISC01);  // falling-edge
   EIMSK |= (1 << INT0);   // enable interrrupt
 
   sei();

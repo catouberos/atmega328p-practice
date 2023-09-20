@@ -21,8 +21,8 @@ int main(void) {
   TIMSK1 = (1 << OCIE1A);  // enable compare match A interrupt
 
   // int0 trigger on logic change
-  EICRA |= (1 << ISC11);  // falling-edge
-  EIMSK |= (1 << INT0);   // enable interrrupt
+  EICRA |= (1 << ISC01);  // falling-edge of int0
+  EIMSK |= (1 << INT0);   // enable interrupt
 
   sei();
 
