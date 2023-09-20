@@ -62,10 +62,10 @@ ISR(TIMER1_COMPA_vect) {
       }
     } else {
       // if PORTB0-PORTB2 is 001
-      if (PORTB) { // !(PORTB & ~(1 << DDB0))
-        PORTB = PORTB >> 1;
+      if (!(PORTB & ~(1 << DDB0))) { // !(PORTB & ~(1 << DDB0))
+        PORTB = 0b100;
       } else {
-        PORTB = 100; // somehow there's an invisible 1100 here
+        PORTB = PORTB >> 1;
       }
     }
 
