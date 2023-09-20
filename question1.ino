@@ -6,8 +6,6 @@ int main(void) {
   DDRD &= ~(1 << DDD2);  // PORTD2 as input
   DDRB |= (1 << DDB5);   // PORTB5 as output
 
-  DDRB |= (1 << DDB0);  // DEBUG: PORTB0 as output
-
   // clock 0
   TCCR0A |= (1 << WGM01);  // CTC mode
   TCCR0B |= (1 << CS01);
