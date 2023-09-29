@@ -12,7 +12,7 @@ int main(void) {
   // clock 1
   TCCR1B |= (1 << WGM12);  // CTC mode
   TCCR1B |= (1 << CS10) | (1 << CS11);  // prescaler of 64
-  OCR1A = 31249;           // 8Hz = 0.125s/interval (default)
+  OCR1A = 24999;           // 0.1s/interval (default)
   TIMSK1 = (1 << OCIE1A);  // enable compare match A interrupt
 
   // int0 trigger on logic change (gear)
@@ -30,8 +30,10 @@ int main(void) {
 }
 
 ISR(INT0_vect) {
-  if (scaler < 3) {
-    scaler++;
+  if (scaler == 1) {
+    scaler = 2;
+  } else if (scaler == 2) {
+    scaler = 5;
   } else {
     scaler = 1;
   }
