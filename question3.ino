@@ -12,7 +12,7 @@ int main(void) {
   // clock 1
   TCCR1B |= (1 << WGM12);  // CTC mode
   TCCR1B |= (1 << CS12);   // prescaler of 256
-  OCR1A = 6249;            // 5Hz
+  OCR1A = 1249;            // 25Hz
   TIMSK1 = (1 << OCIE1A);  // enable compare match A interrupt
 
   // int0 trigger on logic change
@@ -32,7 +32,7 @@ ISR(INT0_vect) {
 ISR(TIMER1_COMPA_vect) {
   if (pressed == 1) {
     if (gpio_1_enabled == 1) {
-      if (count == 32) {
+      if (count == 6) {
         PORTB &= ~(1 << PORTB3);
         PORTB &= ~(1 << PORTB4);
 
