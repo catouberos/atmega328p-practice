@@ -1,6 +1,7 @@
 #include <avr/io.h>
 
 int pressed = 0;
+int count = 0;
 
 int main(void) {
   DDRD &= ~(1 << DDD2);  // PORTD2 as input
@@ -8,8 +9,7 @@ int main(void) {
 
   // clock 0
   TCCR0A |= (1 << WGM01);  // CTC mode
-  TCCR0B |= (1 << CS01);
-  TCCR0B |= (1 << CS00);   // prescaler of 64
+  TCCR0B |= (1 << CS02);   // prescaler of 256
   OCR0A = 249;             // 500Hz
   TIMSK0 = (1 << OCIE0A);  // enable compare match A interrupt
 
@@ -17,7 +17,7 @@ int main(void) {
   TCCR1B ^= (1 << WGM12);  // CTC mode
   TCCR1B |= (1 << CS10);
   TCCR1B |= (1 << CS11);   // prescaler of 64
-  OCR1A = 24999;           // 5Hz
+  OCR1A = 46874;           // 3/4 Hz /2 (using with software prescaler)
   TIMSK1 = (1 << OCIE1A);  // enable compare match A interrupt
 
   // int0 trigger on logic change
@@ -45,7 +45,10 @@ ISR(TIMER0_COMPA_vect) {
 }
 
 ISR(TIMER1_COMPA_vect) {
-  if (pressed == 1) {
+  if (pressed == 1 && count == 1) {
     PORTB ^= (1 << PORTB5);
+    count = 0;
+  } else if (count == 0) {
+    count++;
   }
 }
